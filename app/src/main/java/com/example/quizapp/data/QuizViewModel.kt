@@ -1,16 +1,14 @@
 package com.example.quizapp.data
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.model.Question
 
 class QuizViewModel: ViewModel() {
     private var _currentQuestionIndex = -1
     val currentQuestionIndex: Int
         get() = _currentQuestionIndex
-
-    private lateinit var _currentQuestion: Question
-    val currentQuestion: Question
-        get() = _currentQuestion
 
     private var _score = 0
     val score: Int
@@ -22,9 +20,9 @@ class QuizViewModel: ViewModel() {
         _currentQuestionIndex++
         if(_currentQuestionIndex >= MAX_QUESTION){
             // If questions are over then return false
+            _currentQuestionIndex--
             return false
         }
-        _currentQuestion = questionList[_currentQuestionIndex]
         return true
     }
 
@@ -36,8 +34,6 @@ class QuizViewModel: ViewModel() {
         if(isFirstQuestion())
             return
         _currentQuestionIndex--
-        _currentQuestion = questionList[_currentQuestionIndex]
-
     }
 
     fun evaluateAnswers(){
@@ -63,9 +59,14 @@ class QuizViewModel: ViewModel() {
     fun isSelectedAnswer(option: String): Boolean{
         return (option == _answerList[currentQuestionIndex])
     }
+}
 
-    init{
-        getNextQuestion()
+class QuizViewModelFactory: ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return QuizViewModel() as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

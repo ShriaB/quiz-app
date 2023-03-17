@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import com.example.quizapp.QuizActivity
 import com.example.quizapp.R
 import com.example.quizapp.databinding.FragmentQuizOverBinding
@@ -12,7 +13,6 @@ import com.example.quizapp.databinding.FragmentQuizOverBinding
 class QuizOverFragment : Fragment() {
 
     private lateinit var binding: FragmentQuizOverBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
