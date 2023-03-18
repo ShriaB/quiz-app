@@ -1,11 +1,11 @@
 package com.example.quizapp.data
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.quizapp.model.Question
+import androidx.lifecycle.*
+import com.example.quizapp.data.model.Question
+import com.example.quizapp.data.model.QuestionDao
+import kotlinx.coroutines.launch
 
-class QuizViewModel: ViewModel() {
+class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
     private var _currentQuestionIndex = -1
     val currentQuestionIndex: Int
         get() = _currentQuestionIndex
@@ -14,7 +14,10 @@ class QuizViewModel: ViewModel() {
     val score: Int
         get() = _score
 
+    var questionList: List<Question> = questionDao.getQuestions().shuffled().take(MAX_QUESTION)
+
     private var _answerList: MutableList<String> = MutableList(MAX_QUESTION){""}
+
 
     fun getNextQuestion(): Boolean{
         _currentQuestionIndex++
@@ -59,13 +62,24 @@ class QuizViewModel: ViewModel() {
     fun isSelectedAnswer(option: String): Boolean{
         return (option == _answerList[currentQuestionIndex])
     }
+
+//    init {
+//        getAllQuestions()
+//    }
+
+    fun insertQuestions(question: Question){
+        viewModelScope.launch {
+            questionDao.insertQuestion(question)
+        }
+    }
+
 }
 
-class QuizViewModelFactory: ViewModelProvider.Factory{
+class QuizViewModelFactory(private val questionDao: QuestionDao): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return QuizViewModel() as T
+            return QuizViewModel(questionDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,21 +1,23 @@
 package com.example.quizapp.data
 
-import com.example.quizapp.model.Question
+import com.example.quizapp.data.model.Question
 
 val MAX_QUESTION = 5
-val questionList: List<Question> = listOf(
-    Question("Under which of the following Android is licensed?",
-    "OSS" ,"Sourceforge" ,"Apache/MIT" ,"None of the above","Apache/MIT"),
 
-    Question("Which of the following virtual machine is used by the Android operating system?",
-        "JVM","Dalvik virtual machine", "Simple virtual machine", "None of the above","Dalvik virtual machine"),
+val questionList1: List<Question> = listOf(
+    Question(
+        question = "Under which of the following Android is licensed?",
+   option1 =  "OSS" , option2 = "Sourceforge" , option3 = "Apache/MIT" , option4 = "None of the above", answer = "Apache/MIT"),
 
-    Question("Android is based on which of the following language?",
-        "Java", "C++", "C","None of the above","Java"),
+    Question(question = "Which of the following virtual machine is used by the Android operating system?",
+       option1 =  "JVM", option2= "Dalvik virtual machine", option3 = "Simple virtual machine", option4 =  "None of the above", answer = "Dalvik virtual machine"),
 
-    Question("Which of the following converts Java byte code into Dalvik byte code?",
-        "Dalvik converter", "Dex compiler", "Mobile interpretive compiler (MIC)","None of the above","Dex compiler"),
+    Question(question ="Android is based on which of the following language?",
+        option1 = "Java", option2 = "C++", option3 = "C", option4 = "None of the above", answer = "Java"),
 
-    Question("Which of the following kernel is used in Android?",
-        "MAC", "Windows", "Linux","Redhat","Linux")
+    Question(question = "Which of the following converts Java byte code into Dalvik byte code?",
+       option1 =  "Dalvik converter", option2 = "Dex compiler", option3 = "Mobile interpretive compiler (MIC)", option4 = "None of the above", answer = "Dex compiler"),
+
+    Question(question = "Which of the following kernel is used in Android?",
+       option1 =  "MAC", option2 =  "Windows", option3 = "Linux", option4 = "Redhat", answer = "Linux")
 )

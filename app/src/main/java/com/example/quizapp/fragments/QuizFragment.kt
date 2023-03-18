@@ -8,24 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import com.example.quizapp.QuizActivity
 import com.example.quizapp.data.QuizViewModel
 import com.example.quizapp.databinding.FragmentQuizBinding
-import androidx.fragment.app.viewModels
+import com.example.quizapp.QuizApplication
 import com.example.quizapp.R
 import com.example.quizapp.data.MAX_QUESTION
 import com.example.quizapp.data.QuizViewModelFactory
-import com.example.quizapp.data.questionList
-import com.example.quizapp.model.Question
+import com.example.quizapp.data.model.Question
 
 class QuizFragment: Fragment() {
 
     private lateinit var binding: FragmentQuizBinding
     private val viewModel: QuizViewModel by activityViewModels {
-        QuizViewModelFactory()
+        QuizViewModelFactory(
+            (activity?.application as QuizApplication).database.questionDao()
+        )
     }
 
     private var currentIndex: Int = -1
@@ -37,12 +36,12 @@ class QuizFragment: Fragment() {
     ): View {
         // Inflate the layout for this fragment
         currentIndex = arguments?.getInt("index")!!
-        currentQuestion = questionList[currentIndex]
         binding = FragmentQuizBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        currentQuestion = viewModel.questionList[currentIndex]
         bindDataToView()
     }
 

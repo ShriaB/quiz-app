@@ -18,7 +18,9 @@ class QuizActivity : AppCompatActivity(){
 
     private lateinit var binding: FragmentQuizBinding
     private val viewModel: QuizViewModel by viewModels {
-        QuizViewModelFactory()
+        QuizViewModelFactory(
+            (application as QuizApplication).database.questionDao()
+        )
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
