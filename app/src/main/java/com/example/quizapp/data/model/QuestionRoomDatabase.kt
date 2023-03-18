@@ -22,6 +22,7 @@ abstract class QuestionRoomDatabase: RoomDatabase() {
                 )
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
+                .createFromAsset("database/questionDB.db")
                 .build()
 
                 INSTANCE = instance
