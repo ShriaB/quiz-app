@@ -28,7 +28,7 @@ class QuizActivity : AppCompatActivity(){
         getNextFragment()
     }
 
-    fun showScoreFragment(hasPlayerWon: Boolean, score: Int){
+    fun showScoreFragment(hasPlayerWon: Boolean, score: Int, attempted: Int){
         if(hasPlayerWon){
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, QuizWonFragment())
@@ -36,7 +36,8 @@ class QuizActivity : AppCompatActivity(){
         }
         else{
             val newFragment = QuizOverFragment()
-            newFragment.arguments = bundleOf("score" to score)
+            newFragment.arguments = bundleOf("score" to score,
+                                            "attempted" to attempted)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, newFragment)
                 .commit()
@@ -70,7 +71,7 @@ class QuizActivity : AppCompatActivity(){
             viewModel.evaluateAnswers()
             supportFragmentManager.popBackStack("question", FragmentManager.POP_BACK_STACK_INCLUSIVE)
             // the result fragment is displayed based on the score
-            showScoreFragment(viewModel.hasPlayerWon(), viewModel.score)
+            showScoreFragment(viewModel.hasPlayerWon(), viewModel.score, viewModel.attempted)
         }
     }
 

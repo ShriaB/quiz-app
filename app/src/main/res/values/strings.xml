@@ -13,4 +13,9 @@
     <string name="score_text">You answered %1$d questions correctly.</string>
     <string name="prev_btn" >Previous</string>
     <string name="submit_btn">Submit</string>
+    <string name="total_ques">Total Questions: %1$d</string>
+    <string name="attempted_ques">Attempted: %1$d</string>
+    <string name="correct_ques">Correct: %1$d</string>
+    <string name="correct_answer">Correct Answer %1$s</string>
+    <string name="attempted_answer">Attempted Answer %1$s</string>
 </resources>

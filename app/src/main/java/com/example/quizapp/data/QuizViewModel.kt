@@ -6,24 +6,29 @@ import com.example.quizapp.data.model.QuestionDao
 import kotlinx.coroutines.launch
 
 class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
-    private var _currentQuestionIndex = -1
-    val currentQuestionIndex: Int
-        get() = _currentQuestionIndex
+    var currentQuestionIndex = -1
+//    val currentQuestionIndex: Int
+//        get() = _currentQuestionIndex
+
+    private var _attempted = 0
+    val attempted: Int
+        get() = _attempted
 
     private var _score = 0
     val score: Int
         get() = _score
 
+
     var questionList: List<Question> = questionDao.getQuestions().shuffled().take(MAX_QUESTION)
 
-    private var _answerList: MutableList<String> = MutableList(MAX_QUESTION){""}
+    var _answerList: MutableList<String> = MutableList(MAX_QUESTION){""}
 
 
     fun getNextQuestion(): Boolean{
-        _currentQuestionIndex++
-        if(_currentQuestionIndex >= MAX_QUESTION){
+        currentQuestionIndex++
+        if(currentQuestionIndex >= MAX_QUESTION){
             // If questions are over then return false
-            _currentQuestionIndex--
+            currentQuestionIndex--
             return false
         }
         return true
@@ -36,11 +41,14 @@ class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
     fun getPreviousQuestion(){
         if(isFirstQuestion())
             return
-        _currentQuestionIndex--
+        currentQuestionIndex--
     }
 
     fun evaluateAnswers(){
         for(i in 0 until MAX_QUESTION){
+            if(_answerList[i] != "") {
+                _attempted++
+            }
             if(_answerList[i].equals(questionList[i].answer)){
                 _score++
             }
@@ -48,11 +56,11 @@ class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
     }
 
     fun isFirstQuestion(): Boolean{
-        return _currentQuestionIndex == 0
+        return currentQuestionIndex == 0
     }
 
     fun isLastQuestion(): Boolean{
-        return _currentQuestionIndex == (MAX_QUESTION - 1)
+        return currentQuestionIndex == (MAX_QUESTION - 1)
     }
 
     fun hasPlayerWon(): Boolean{
