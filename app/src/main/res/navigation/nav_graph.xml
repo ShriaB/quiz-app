@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.quizapp.fragments.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.quizapp.fragments.QuizFragment"
+        android:label="QuizFragment"
+        tools:layout="@layout/fragment_quiz">
+        <action
+            android:id="@+id/action_quizFragment_self"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_quizOverFragment"
+            app:destination="@id/quizOverFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_quizWonFragment"
+            app:destination="@id/quizWonFragment" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizOverFragment"
+        android:name="com.example.quizapp.fragments.QuizOverFragment"
+        android:label="QuizOverFragment"
+        tools:layout="@layout/fragment_quiz_over">
+        <argument
+            android:name="score"
+            app:argType="integer" />
+        <argument
+            android:name="attempted"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_quizOverFragment_to_quizFragment"
+            app:destination="@id/quizFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizWonFragment"
+        android:name="com.example.quizapp.fragments.QuizWonFragment"
+        android:label="QuizWonFragment"
+        tools:layout="@layout/fragment_quiz_won"/>
+</navigation>

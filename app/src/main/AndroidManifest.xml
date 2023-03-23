@@ -15,9 +15,6 @@
         android:debuggable="true"
         tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".QuizActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,6 +22,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Enabling implicit deep linking -->
+            <nav-graph android:value="@navigation/nav_graph"/>
         </activity>
     </application>
 

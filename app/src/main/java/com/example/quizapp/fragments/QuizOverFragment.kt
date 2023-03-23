@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.quizapp.QuizActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.quizapp.QuizApplication
 import com.example.quizapp.R
-import com.example.quizapp.data.MAX_QUESTION
+import com.example.quizapp.data.NO_OF_QUESTIONS
 import com.example.quizapp.data.QuizViewModel
 import com.example.quizapp.data.QuizViewModelFactory
 import com.example.quizapp.databinding.FragmentQuizOverBinding
@@ -19,11 +18,8 @@ import com.example.quizapp.databinding.FragmentQuizOverBinding
 class QuizOverFragment : Fragment() {
 
     private lateinit var binding: FragmentQuizOverBinding
-    private val viewModel: QuizViewModel by activityViewModels {
-        QuizViewModelFactory(
-            (activity?.application as QuizApplication).database.questionDao()
-        )
-    }
+    private val args: QuizOverFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,14 +31,22 @@ class QuizOverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
-            totalQuestion.text = getString(R.string.total_ques, MAX_QUESTION)
-            attemptedQuestion.text = getString(R.string.attempted_ques, arguments?.getInt("attempted"))
-            correctQuestion.text = getString(R.string.correct_ques, arguments?.getInt("score"))
+            /**
+             * Using arguments passed to this fragment for the text view to give feedback on user's performance
+             */
+            totalQuestion.text = getString(R.string.total_ques, NO_OF_QUESTIONS)
+            attemptedQuestion.text = getString(R.string.attempted_ques, args?.attempted)
+            correctQuestion.text = getString(R.string.correct_ques, args?.score)
+
+            /**
+             * When try again button is clicked then we navigate to Quiz fragment
+             * Where we pass the index of the first question
+             */
             tryAgainBtn.setOnClickListener{
-                (activity as QuizActivity).newGame()
+                view.findNavController().navigate(
+                    QuizOverFragmentDirections.actionQuizOverFragmentToQuizFragment(0)
+                )
             }
-//            recyclerView.layoutManager = LinearLayoutManager(context)
-//            recyclerView.adapter = QuizOverListAdapter(requireContext(), viewModel.questionList, viewModel._answerList )
         }
 
     }

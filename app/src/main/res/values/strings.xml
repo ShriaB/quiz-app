@@ -11,7 +11,7 @@
     <string name="know_more_btn">Know More About Android</string>
     <string name="comment_text">Great job!! You answered all the questions correctly.</string>
     <string name="score_text">You answered %1$d questions correctly.</string>
-    <string name="prev_btn" >Previous</string>
+    <string name="prev_btn">Previous</string>
     <string name="submit_btn">Submit</string>
     <string name="total_ques">Total Questions: %1$d</string>
     <string name="attempted_ques">Attempted: %1$d</string>

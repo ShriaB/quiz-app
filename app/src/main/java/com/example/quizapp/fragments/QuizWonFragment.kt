@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.net.toUri
+import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
 
 class QuizWonFragment : Fragment() {
@@ -24,6 +25,9 @@ class QuizWonFragment : Fragment() {
         val uriString = "https://android-developers.googleblog.com"
         val knowMoreBtn = view.findViewById<Button>(R.id.know_more_btn)
         knowMoreBtn.setOnClickListener{
+            /**
+             * Implicit intent that takes the user to the web browser
+             */
             val intent = Intent(Intent.ACTION_VIEW, uriString.toUri())
             startActivity(intent)
         }
