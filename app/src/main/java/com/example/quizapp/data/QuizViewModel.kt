@@ -5,6 +5,7 @@ import androidx.room.Index
 import com.example.quizapp.data.model.Question
 import com.example.quizapp.data.model.QuestionDao
 import kotlinx.coroutines.launch
+import java.util.Random
 
 /**
  * @property questionList list of the questions after fetching them from database and shuffling and taking the first 5 questions
@@ -51,12 +52,12 @@ class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
      * and false is returned to indicated no more questions are left
      */
     fun getNextQuestion(): Boolean{
-        _currentQuestionIndex++
-        if(_currentQuestionIndex >= NO_OF_QUESTIONS){
+        if(isLastQuestion()){
             // If questions are over then return false
-            _currentQuestionIndex--
+            _currentQuestionIndex = NO_OF_QUESTIONS - 1
             return false
         }
+        _currentQuestionIndex++
         return true
     }
 
@@ -67,8 +68,10 @@ class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
      * indicating that there are questions before
      */
     fun getPreviousQuestion(): Boolean{
-        if(isFirstQuestion())
+        if(isFirstQuestion()){
+            _currentQuestionIndex = 0
             return false
+        }
         _currentQuestionIndex--
         return true
     }
@@ -98,14 +101,14 @@ class QuizViewModel(private val questionDao: QuestionDao): ViewModel() {
      * Checks if current question is the first question
      */
     fun isFirstQuestion(): Boolean{
-        return _currentQuestionIndex == 0
+        return _currentQuestionIndex <= 0
     }
 
     /**
      * Checks if current question is the last question
      */
     fun isLastQuestion(): Boolean{
-        return _currentQuestionIndex == (NO_OF_QUESTIONS - 1)
+        return _currentQuestionIndex >= (NO_OF_QUESTIONS - 1)
     }
 
     /**
