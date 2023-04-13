@@ -26,6 +26,7 @@ Working
 - HomeFragment
   - When the app is launched the HomeFragment is displayed with a start button
   - When user clicks on the start button then the quiz starts and the questions are displayed one by one in the QuizFragemnt
+  
     <img src="https://user-images.githubusercontent.com/127374103/231673773-c6f507c9-f1f7-4cc6-bff5-7806092a91d7.png" height="200px">
 
   
